@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oceanic Resort - Guest SMS System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-purple: #6a0dad;
+            --dark-purple: #4b0082;
+            --light-purple: #9b59b6;
+            --gold: #ffd700;
+            --light-gold: #fffacd;
+            --dark-grey: #333333;
+            --medium-grey: #555555;
+            --light-grey: #f5f5f5;
+            --white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-grey);
+            color: var(--dark-grey);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-purple), var(--dark-purple));
+            color: var(--white);
+            padding: 20px 0;
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--gold);
+            font-weight: 300;
+        }
+        
+        .powered-by {
+            font-size: 14px;
+            color: var(--light-purple);
+            background-color: var(--white);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 20px;
+        }
+        
+        .sidebar {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            color: var(--medium-grey);
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background-color: var(--primary-purple);
+            color: var(--white);
+        }
+        
+        .sidebar-menu a i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        
+        .main-content {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+        }
+        
+        .section-title {
+            color: var(--primary-purple);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-purple);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            color: var(--gold);
+        }
+        
+        .card {
+            background-color: var(--light-grey);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--gold);
+        }
+        
+        .card-title {
+            color: var(--dark-purple);
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--medium-grey);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-purple);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(106, 13, 173, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-purple);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-purple);
+            transform: translateY(-2px);
+        }
+        
+        .btn-gold {
+            background-color: var(--gold);
+            color: var(--dark-grey);
+        }
+        
+        .btn-gold:hover {
+            background-color: #e6c200;
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+        
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary-purple), var(--light-purple));
+            color: var(--white);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card.gold {
+            background: linear-gradient(135deg, var(--gold), #e6c200);
+            color: var(--dark-grey);
+        }
+        
+        .stat-card.grey {
+            background: linear-gradient(135deg, var(--medium-grey), var(--dark-grey));
+            color: var(--white);
+        }
+        
+        .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .history-table th, .history-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .history-table th {
+            background-color: var(--primary-purple);
+            color: var(--white);
+            font-weight: 600;
+        }
+        
+        .history-table tr:nth-child(even) {
+            background-color: var(--light-grey);
+        }
+        
+        .history-table tr:hover {
+            background-color: #f0e6ff;
+        }
+        
+        .status-delivered {
+            color: #28a745;
+            font-weight: 600;
+        }
+        
+        .status-failed {
+            color: #dc3545;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            color: #ffc107;
+            font-weight: 600;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--medium-grey);
+            font-size: 14px;
+            border-top: 1px solid #ddd;
+        }
+        
+        .footer a {
+            color: var(--primary-purple);
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: var(--white);
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .modal-title {
+            color: var(--primary-purple);
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .close-modal {
+            color: var(--medium-grey);
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close-modal:hover {
+            color: var(--dark-purple);
+        }
+        
+        .modal-footer {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        /* Content sections */
+        .content-section {
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        /* Small button styles */
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+                justify-content: center;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 20% auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://via.placeholder.com/50x50?text=OR" alt="Oceanic Resort Logo">
+                    <h1>Oceanic Resort <span>SMS System</span></h1>
+                </div>
+                <div class="powered-by">Powered by Arkesel SMS API | Designed by JaguarTech Hub</div>
+            </div>
+        </header>
+        
+        <div class="dashboard">
+            <div class="sidebar">
+                <ul class="sidebar-menu">
+                    <li><a href="#" class="menu-link active" data-section="dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="#" class="menu-link" data-section="send-sms"><i class="fas fa-paper-plane"></i> Send SMS</a></li>
+                    <li><a href="#" class="menu-link" data-section="guest-contacts"><i class="fas fa-users"></i> Guest Contacts</a></li>
+                    <li><a href="#" class="menu-link" data-section="sms-history"><i class="fas fa-history"></i> SMS History</a></li>
+                    <li><a href="#" class="menu-link" data-section="templates"><i class="fas fa-envelope"></i> Templates</a></li>
+                    <li><a href="#" class="menu-link" data-section="reports"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                    <li><a href="#" class="menu-link" data-section="settings"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a href="#" class="menu-link" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </div>
+            
+            <div class="main-content">
+                <!-- Dashboard Section -->
+                <div id="dashboard" class="content-section active">
+                    <h2 class="section-title"><i class="fas fa-tachometer-alt"></i> Dashboard</h2>
+                    
+                    <div class="stats-container">
+                        <div class="stat-card">
+                            <div class="stat-label">SMS Sent Today</div>
+                            <div class="stat-value" id="sms-today">0</div>
+                            <div class="stat-label"><span id="sms-change">0%</span> from yesterday</div>
+                        </div>
+                        <div class="stat-card gold">
+                            <div class="stat-label">Guests Reached</div>
+                            <div class="stat-value" id="guests-reached">0</div>
+                            <div class="stat-label"><span id="success-rate">0%</span> success rate</div>
+                        </div>
+                        <div class="stat-card grey">
+                            <div class="stat-label">Credits Remaining</div>
+                            <div class="stat-value" id="credits-remaining">0</div>
+                            <div class="stat-label">~<span id="messages-remaining">0</span> messages</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="card-title">Quick Send Message</h3>
+                        <form id="quickSmsForm">
+                            <div class="form-group">
+                                <label for="quick-recipient">Recipient Phone Number</label>
+                                <input type="text" class="form-control" id="quick-recipient" placeholder="e.g., 233244123456" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="quick-message">Message Content</label>
+                                <textarea class="form-control" id="quick-message" rows="3" placeholder="Type your message here..." required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-gold"><i class="fas fa-paper-plane"></i> Send Message</button>
+                        </form>
+                    </div>
+                    
+                    <div id="quickResponseMessage" style="display: none;"></div>
+                </div>
+                
+                <!-- Send SMS Section -->
+                <div id="send-sms" class="content-section">
+                    <h2 class="section-title"><i class="fas fa-paper-plane"></i> Send SMS</h2>
+                    
+                    <div class="card">
+                        <h3 class="card-title">Compose Message</h3>
+                        <form id="smsForm">
+                            <div class="form-group">
+                                <label for="recipient">Recipient Phone Number</label>
+                                <input type="text" class="form-control" id="recipient" placeholder="e.g., 233244123456" required>
+                                <small class="text-muted">Include country code (e.g., 233 for Ghana)</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="sender">Sender ID</label>
+                                <input type="text" class="form-control" id="sender" value="OCEANICRES" required>
+                                <small class="text-muted">Max 11 characters (approved by Arkesel)</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message">Message Content</label>
+                                <textarea class="form-control" id="message" rows="5" placeholder="Type your message here..." required></textarea>
+                                <small class="text-muted">160 characters = 1 SMS unit</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="template">Select Template (optional)</label>
+                                <select class="form-control" id="template">
+                                    <option value="">-- Select Template --</option>
+                                    <option value="welcome">Welcome Message</option>
+                                    <option value="checkin">Check-in Reminder</option>
+                                    <option value="checkout">Check-out Reminder</option>
+                                    <option value="promo">Special Promotion</option>
+                                    <option value="event">Event Notification</option>
+                                </select>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-gold"><i class="fas fa-paper-plane"></i> Send Message</button>
+                        </form>
+                    </div>
+                    
+                    <div id="responseMessage" style="display: none;"></div>
+                </div>
+                
+                <!-- Guest Contacts Section -->
+                <div id="guest-contacts" class="content-section">
+                    <h2 class="section-title"><i class="fas fa-users"></i> Guest Contacts</h2>
+                    
+                    <div class="card">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="search-guests" placeholder="Search guests...">
+                        </div>
+                        
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
+                                    <th>Last Stay</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="guest-list">
+                                <!-- Guest data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- SMS History Section -->
+                <div id="sms-history" class="content-section">
+                    <h2 class="section-title"><i class="fas fa-history"></i> SMS History</h2>
+                    
+                    <div class="card">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="search-history" placeholder="Search history...">
+                        </div>
+                        
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Recipient</th>
+                                    <th>Message</th>
+                                    <th>Status</th>
+                                    <th>Cost</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-list">
+                                <!-- History data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Templates Section -->
+                <div id="templates" class="content-section">
+                    <h2 class="section-title"><i class="fas fa-envelope"></i> Message Templates</h2>
+                    
+                    <div class="card">
+                        <div class="form-group">
+                            <button class="btn" id="new-template-btn"><i class="fas fa-plus"></i> New Template</button>
+                        </div>
+                        
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Content</th>
+                                    <th>Last Used</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="template-list">
+                                <!-- Template data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Reports Section -->
+                <div id="reports" class="content-section">
+                    <h2 class="section-title"><i class="fas fa-chart-bar"></i> Reports & Analytics</h2>
+                    
+                    <div class="card">
+                        <h3 class="card-title">SMS Usage Overview</h3>
+                        <div id="usage-chart" style="height: 300px; background-color: #f9f9f9; display: flex; justify-content: center; align-items: center;">
+                            [SMS Usage Chart Would Appear Here]
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="card-title">Filter Reports</h3>
+                        <form id="reportForm">
+                            <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                <div>
+                                    <label for="report-type">Report Type</label>
+                                    <select class="form-control" id="report-type">
+                                        <option value="daily">Daily Usage</option>
+                                        <option value="weekly">Weekly Usage</option>
+                                        <option value="monthly">Monthly Usage</option>
+                                        <option value="custom">Custom Range</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="date-range">Date Range</label>
+                                    <input type="text" class="form-control" id="date-range" placeholder="Select date range">
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn"><i class="fas fa-filter"></i> Generate Report</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Settings Section -->
+                <div id="settings" class="content-section">
+                    <h2 class="section-title"><i class="fas fa-cog"></i> System Settings</h2>
+                    
+                    <div class="card">
+                        <h3 class="card-title">SMS Gateway Configuration</h3>
+                        <form id="settingsForm">
+                            <div class="form-group">
+                                <label for="api-key">Arkesel API Key</label>
+                                <div style="display: flex; gap: 10px;">
+                                    <input type="password" class="form-control" id="api-key" value="" required>
+                                    <button type="button" id="toggle-api-key" class="btn-gold" style="padding: 0 15px;">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="sender-id">Default Sender ID</label>
+                                <input type="text" class="form-control" id="sender-id" value="OCEANICRES" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="sms-rate">SMS Rate (per unit)</label>
+                                <input type="number" step="0.01" class="form-control" id="sms-rate" value="0.25" required>
+                                <small class="text-muted">Cost per SMS unit in your local currency</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="save-history" checked> Save message history
+                                </label>
+                            </div>
+                            
+                            <button type="submit" class="btn"><i class="fas fa-save"></i> Save Settings</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2023 Oceanic Resort. All rights reserved. | Designed by <a href="#">JaguarTech Hub</a></p>
+        </div>
+    </div>
+    
+    <!-- Logout Modal -->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-sign-out-alt"></i> Confirm Logout</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to logout from the Oceanic Resort SMS System?</p>
+                <p>Any unsaved changes will be lost.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-gold" id="cancel-logout">Cancel</button>
+                <button class="btn" id="confirm-logout">Logout</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Template Editor Modal -->
+    <div id="templateModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-envelope"></i> <span id="template-modal-title">New Template</span></h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="templateForm">
+                    <div class="form-group">
+                        <label for="template-name">Template Name</label>
+                        <input type="text" class="form-control" id="template-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="template-content">Content</label>
+                        <textarea class="form-control" id="template-content" rows="6" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-gold" id="cancel-template">Cancel</button>
+                <button class="btn" id="save-template">Save Template</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Application State
+        const state = {
+            settings: {
+                apiKey: localStorage.getItem('apiKey') || '',
+                senderId: localStorage.getItem('senderId') || 'OCEANICRES',
+                smsRate: parseFloat(localStorage.getItem('smsRate')) || 0.25,
+                saveHistory: localStorage.getItem('saveHistory') !== 'false'
+            },
+            templates: JSON.parse(localStorage.getItem('templates')) || [
+                {
+                    id: 1,
+                    name: 'Welcome Message',
+                    content: 'Dear Guest,\n\nWelcome to Oceanic Resort! Your room is ready for check-in. Our front desk is available 24/7 to assist you.\n\nFor any inquiries, please dial 0 from your room phone.\n\nWe hope you enjoy your stay!\n\nOceanic Resort Team',
+                    lastUsed: '2023-06-15'
+                },
+                {
+                    id: 2,
+                    name: 'Check-in Reminder',
+                    content: 'Dear Guest,\n\nWe\'re excited for your upcoming stay at Oceanic Resort! Check-in time is from 2PM. Please present your ID and this message at reception.\n\nSafe travels!\n\nOceanic Resort Team',
+                    lastUsed: '2023-06-14'
+                },
+                {
+                    id: 3,
+                    name: 'Check-out Reminder',
+                    content: 'Dear Guest,\n\nWe hope you enjoyed your stay at Oceanic Resort. Check-out time is 11AM. Please visit reception to complete your departure.\n\nLooking forward to welcoming you back soon!\n\nOceanic Resort Team',
+                    lastUsed: '2023-06-12'
+                },
+                {
+                    id: 4,
+                    name: 'Special Promotion',
+                    content: 'Exclusive for Oceanic Resort Guests: Enjoy 20% off at our Azure Restaurant today! Show this message to your server. Offer valid until 10PM. Bon appétit!',
+                    lastUsed: '2023-06-10'
+                }
+            ],
+            history: JSON.parse(localStorage.getItem('history')) || [],
+            guests: JSON.parse(localStorage.getItem('guests')) || [
+                {
+                    id: 1,
+                    name: 'Kwame Asante',
+                    phone: '233244123456',
+                    email: 'kasante@example.com',
+                    lastStay: '2023-06-10'
+                },
+                {
+                    id: 2,
+                    name: 'Ama Serwaa',
+                    phone: '233244654321',
+                    email: 'aserwaa@example.com',
+                    lastStay: '2023-06-15'
+                },
+                {
+                    id: 3,
+                    name: 'Yaw Boateng',
+                    phone: '233244789012',
+                    email: 'yboateng@example.com',
+                    lastStay: '2023-05-28'
+                },
+                {
+                    id: 4,
+                    name: 'Esi Mensah',
+                    phone: '233244345678',
+                    email: 'emensah@example.com',
+                    lastStay: '2023-06-12'
+                }
+            ],
+            stats: {
+                smsToday: parseInt(localStorage.getItem('smsToday')) || 0,
+                guestsReached: parseInt(localStorage.getItem('guestsReached')) || 0,
+                creditsRemaining: parseInt(localStorage.getItem('creditsRemaining')) || 1000,
+                yesterdayCount: parseInt(localStorage.getItem('yesterdayCount')) || 0
+            }
+        };
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load settings
+            loadSettings();
+            
+            // Load initial data
+            loadDashboardStats();
+            loadGuestList();
+            loadHistory();
+            loadTemplates();
+            
+            // Initialize event listeners
+            initEventListeners();
+        });
+
+        function loadSettings() {
+            document.getElementById('api-key').value = state.settings.apiKey;
+            document.getElementById('sender-id').value = state.settings.senderId;
+            document.getElementById('sms-rate').value = state.settings.smsRate;
+            document.getElementById('save-history').checked = state.settings.saveHistory;
+        }
+
+        function loadDashboardStats() {
+            const today = new Date().toISOString().split('T')[0];
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yesterdayStr = yesterday.toISOString().split('T')[0];
+            
+            // Calculate SMS sent today
+            const smsToday = state.history.filter(msg => {
+                return msg.date.startsWith(today);
+            }).length;
+            
+            // Calculate SMS sent yesterday
+            const smsYesterday = state.history.filter(msg => {
+                return msg.date.startsWith(yesterdayStr);
+            }).length;
+            
+            // Update stats
+            state.stats.smsToday = smsToday;
+            state.stats.yesterdayCount = smsYesterday;
+            
+            // Calculate percentage change
+            let change = 0;
+            if (smsYesterday > 0) {
+                change = ((smsToday - smsYesterday) / smsYesterday) * 100;
+            } else if (smsToday > 0) {
+                change = 100;
+            }
+            
+            // Calculate success rate
+            const deliveredCount = state.history.filter(msg => msg.status === 'delivered').length;
+            const successRate = state.history.length > 0 ? 
+                Math.round((deliveredCount / state.history.length) * 100) : 0;
+            
+            // Update UI
+            document.getElementById('sms-today').textContent = smsToday;
+            document.getElementById('guests-reached').textContent = deliveredCount;
+            document.getElementById('credits-remaining').textContent = state.stats.creditsRemaining;
+            document.getElementById('messages-remaining').textContent = Math.floor(state.stats.creditsRemaining / state.settings.smsRate);
+            
+            const changeElement = document.getElementById('sms-change');
+            changeElement.textContent = `${change > 0 ? '+' : ''}${Math.round(change)}%`;
+            changeElement.style.color = change >= 0 ? '#28a745' : '#dc3545';
+            
+            document.getElementById('success-rate').textContent = `${successRate}%`;
+        }
+
+        function loadGuestList() {
+            const guestList = document.getElementById('guest-list');
+            guestList.innerHTML = '';
+            
+            state.guests.forEach(guest => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${guest.name}</td>
+                    <td>${guest.phone}</td>
+                    <td>${guest.email}</td>
+                    <td>${guest.lastStay}</td>
+                    <td>
+                        <button class="btn btn-sm send-sms-btn" data-phone="${guest.phone}" style="padding: 5px 10px; font-size: 12px;">
+                            <i class="fas fa-sms"></i> SMS
+                        </button>
+                        <button class="btn btn-gold btn-sm edit-guest-btn" data-id="${guest.id}" style="padding: 5px 10px; font-size: 12px;">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                    </td>
+                `;
+                guestList.appendChild(row);
+            });
+        }
+
+        function loadHistory() {
+            const historyList = document.getElementById('history-list');
+            historyList.innerHTML = '';
+            
+            state.history.forEach(msg => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${msg.date}</td>
+                    <td>${msg.recipient}</td>
+                    <td>${msg.message.length > 30 ? msg.message.substring(0, 30) + '...' : msg.message}</td>
+                    <td class="status-${msg.status}">${msg.status.charAt(0).toUpperCase() + msg.status.slice(1)}</td>
+                    <td>${msg.cost} unit${msg.cost !== 1 ? 's' : ''}</td>
+                `;
+                historyList.appendChild(row);
+            });
+        }
+
+        function loadTemplates() {
+            const templateList = document.getElementById('template-list');
+            templateList.innerHTML = '';
+            
+            state.templates.forEach(template => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${template.name}</td>
+                    <td>${template.content.length > 30 ? template.content.substring(0, 30) + '...' : template.content}</td>
+                    <td>${template.lastUsed || 'Never'}</td>
+                    <td>
+                        <button class="btn btn-sm use-template-btn" data-id="${template.id}" style="padding: 5px 10px; font-size: 12px;">
+                            <i class="fas fa-paper-plane"></i> Use
+                        </button>
+                        <button class="btn btn-gold btn-sm edit-template-btn" data-id="${template.id}" style="padding: 5px 10px; font-size: 12px;">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                    </td>
+                `;
+                templateList.appendChild(row);
+            });
+        }
+
+        function initEventListeners() {
+            // Menu Navigation
+            document.querySelectorAll('.menu-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    if (this.id === 'logout-btn') {
+                        document.getElementById('logoutModal').style.display = 'block';
+                        return;
+                    }
+                    
+                    const targetSection = this.getAttribute('data-section');
+                    
+                    document.querySelectorAll('.content-section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+                    document.getElementById(targetSection).classList.add('active');
+                    
+                    document.querySelectorAll('.menu-link').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+            });
+            
+            // SMS Form Submission
+            document.getElementById('smsForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                sendSMS(
+                    document.getElementById('recipient').value,
+                    document.getElementById('sender').value,
+                    document.getElementById('message').value,
+                    'responseMessage'
+                );
+            });
+            
+            // Quick SMS Form Submission
+            document.getElementById('quickSmsForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                sendSMS(
+                    document.getElementById('quick-recipient').value,
+                    state.settings.senderId,
+                    document.getElementById('quick-message').value,
+                    'quickResponseMessage'
+                );
+            });
+            
+            // Settings Form Submission
+            document.getElementById('settingsForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveSettings();
+            });
+            
+            // Template selection handler
+            document.getElementById('template').addEventListener('change', function() {
+                const template = this.value;
+                if (!template) return;
+                
+                const selectedTemplate = state.templates.find(t => t.name.toLowerCase().includes(template));
+                if (selectedTemplate) {
+                    document.getElementById('message').value = selectedTemplate.content;
+                }
+            });
+            
+            // New Template Button
+            document.getElementById('new-template-btn').addEventListener('click', function() {
+                openTemplateModal();
+            });
+            
+            // Use Template Buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.use-template-btn')) {
+                    const btn = e.target.closest('.use-template-btn');
+                    const templateId = parseInt(btn.getAttribute('data-id'));
+                    useTemplate(templateId);
+                }
+                
+                if (e.target.closest('.edit-template-btn')) {
+                    const btn = e.target.closest('.edit-template-btn');
+                    const templateId = parseInt(btn.getAttribute('data-id'));
+                    openTemplateModal(templateId);
+                }
+                
+                if (e.target.closest('.send-sms-btn')) {
+                    const btn = e.target.closest('.send-sms-btn');
+                    const phone = btn.getAttribute('data-phone');
+                    document.getElementById('recipient').value = phone;
+                    
+                    // Switch to Send SMS section
+                    document.querySelectorAll('.content-section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    document.getElementById('send-sms').classList.add('active');
+                    
+                    document.querySelectorAll('.menu-link').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    document.querySelector('.menu-link[data-section="send-sms"]').classList.add('active');
+                    
+                    // Focus on message field
+                    document.getElementById('message').focus();
+                }
+            });
+            
+            // Toggle API Key Visibility
+            document.getElementById('toggle-api-key').addEventListener('click', function() {
+                const apiKeyInput = document.getElementById('api-key');
+                if (apiKeyInput.type === 'password') {
+                    apiKeyInput.type = 'text';
+                    this.innerHTML = '<i class="fas fa-eye-slash"></i>';
+                } else {
+                    apiKeyInput.type = 'password';
+                    this.innerHTML = '<i class="fas fa-eye"></i>';
+                }
+            });
+            
+            // Logout Modal
+            const logoutModal = document.getElementById('logoutModal');
+            document.querySelector('#logoutModal .close-modal').addEventListener('click', function() {
+                logoutModal.style.display = 'none';
+            });
+            
+            document.getElementById('cancel-logout').addEventListener('click', function() {
+                logoutModal.style.display = 'none';
+            });
+            
+            document.getElementById('confirm-logout').addEventListener('click', function() {
+                // In a real application, you would:
+                // 1. Clear session data
+                // 2. Redirect to login page
+                alert('You have been logged out. In a real application, this would redirect to the login page.');
+                logoutModal.style.display = 'none';
+            });
+            
+            // Template Modal
+            const templateModal = document.getElementById('templateModal');
+            document.querySelector('#templateModal .close-modal').addEventListener('click', function() {
+                templateModal.style.display = 'none';
+            });
+            
+            document.getElementById('cancel-template').addEventListener('click', function() {
+                templateModal.style.display = 'none';
+            });
+            
+            document.getElementById('save-template').addEventListener('click', function() {
+                saveTemplate();
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', function(e) {
+                if (e.target === logoutModal) {
+                    logoutModal.style.display = 'none';
+                }
+                if (e.target === templateModal) {
+                    templateModal.style.display = 'none';
+                }
+            });
+        }
+
+        function sendSMS(recipient, sender, message, responseContainerId) {
+            // Validate inputs
+            if (!recipient || !sender || !message) {
+                showAlert('Please fill in all required fields', 'error', responseContainerId);
+                return;
+            }
+            
+            // Validate phone number format
+            if (!/^\d+$/.test(recipient)) {
+                showAlert('Phone number should contain only digits', 'error', responseContainerId);
+                return;
+            }
+            
+            // Show loading state
+            const form = document.getElementById(responseContainerId === 'responseMessage' ? 'smsForm' : 'quickSmsForm');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            
+            // Prepare request data
+            const requestData = {
+                sender: sender,
+                message: message,
+                recipients: [recipient]
+            };
+            
+            // Make API call to Arkesel
+            fetch('https://sms.arkesel.com/api/v2/sms/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'api-key': state.settings.apiKey || 'YOUR_ARKESEL_API_KEY' // Replace with actual API key
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === 'success') {
+                    // Calculate cost (1 unit per 160 characters)
+                    const cost = Math.ceil(message.length / 160);
+                    
+                    // Add to history
+                    const now = new Date();
+                    const dateStr = now.toISOString().split('T')[0] + ' ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                    
+                    const newMessage = {
+                        date: dateStr,
+                        recipient: recipient,
+                        message: message,
+                        status: 'delivered',
+                        cost: cost
+                    };
+                    
+                    state.history.unshift(newMessage);
+                    state.stats.creditsRemaining -= cost;
+                    state.stats.smsToday += 1;
+                    
+                    // Update local storage
+                    localStorage.setItem('history', JSON.stringify(state.history));
+                    localStorage.setItem('creditsRemaining', state.stats.creditsRemaining);
+                    localStorage.setItem('smsToday', state.stats.smsToday);
+                    
+                    // Update UI
+                    showAlert('Message sent successfully!', 'success', responseContainerId);
+                    loadDashboardStats();
+                    loadHistory();
+                    
+                    // Clear form if it's the main SMS form
+                    if (responseContainerId === 'responseMessage') {
+                        document.getElementById('smsForm').reset();
+                        document.getElementById('sender').value = state.settings.senderId;
+                    } else {
+                        document.getElementById('quickSmsForm').reset();
+                    }
+                } else {
+                    showAlert(`Failed to send message: ${data.message || 'Unknown error'}`, 'error', responseContainerId);
+                }
+            })
+            .catch(error => {
+                console.error('Error sending SMS:', error);
+                showAlert(`Error: ${error.message}`, 'error', responseContainerId);
+                
+                // For demo purposes, we'll simulate a successful response if API fails
+                if (!state.settings.apiKey) {
+                    setTimeout(() => {
+                        showAlert('DEMO: Message would have been sent with valid API key', 'success', responseContainerId);
+                        if (responseContainerId === 'responseMessage') {
+                            document.getElementById('smsForm').reset();
+                            document.getElementById('sender').value = state.settings.senderId;
+                        } else {
+                            document.getElementById('quickSmsForm').reset();
+                        }
+                    }, 1000);
+                }
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+            });
+        }
+
+        function saveSettings() {
+            state.settings.apiKey = document.getElementById('api-key').value;
+            state.settings.senderId = document.getElementById('sender-id').value;
+            state.settings.smsRate = parseFloat(document.getElementById('sms-rate').value);
+            state.settings.saveHistory = document.getElementById('save-history').checked;
+            
+            // Save to local storage
+            localStorage.setItem('apiKey', state.settings.apiKey);
+            localStorage.setItem('senderId', state.settings.senderId);
+            localStorage.setItem('smsRate', state.settings.smsRate);
+            localStorage.setItem('saveHistory', state.settings.saveHistory);
+            
+            // Update sender field in SMS form
+            document.getElementById('sender').value = state.settings.senderId;
+            
+            showAlert('Settings saved successfully!', 'success', 'responseMessage');
+            
+            // Update dashboard stats
+            loadDashboardStats();
+        }
+
+        function useTemplate(templateId) {
+            const template = state.templates.find(t => t.id === templateId);
+            if (!template) return;
+            
+            // Update template last used date
+            const today = new Date().toISOString().split('T')[0];
+            template.lastUsed = today;
+            
+            // Save to local storage
+            localStorage.setItem('templates', JSON.stringify(state.templates));
+            
+            // Switch to Send SMS section and populate fields
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById('send-sms').classList.add('active');
+            
+            document.querySelectorAll('.menu-link').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelector('.menu-link[data-section="send-sms"]').classList.add('active');
+            
+            // Populate message field
+            document.getElementById('message').value = template.content;
+            document.getElementById('message').focus();
+        }
+
+        function openTemplateModal(templateId = null) {
+            const modal = document.getElementById('templateModal');
+            const form = document.getElementById('templateForm');
+            
+            if (templateId) {
+                // Edit existing template
+                const template = state.templates.find(t => t.id === templateId);
+                if (template) {
+                    document.getElementById('template-modal-title').textContent = 'Edit Template';
+                    document.getElementById('template-name').value = template.name;
+                    document.getElementById('template-content').value = template.content;
+                    form.dataset.templateId = templateId;
+                }
+            } else {
+                // New template
+                document.getElementById('template-modal-title').textContent = 'New Template';
+                form.reset();
+                delete form.dataset.templateId;
+            }
+            
+            modal.style.display = 'block';
+        }
+
+        function saveTemplate() {
+            const form = document.getElementById('templateForm');
+            const name = document.getElementById('template-name').value;
+            const content = document.getElementById('template-content').value;
+            
+            if (!name || !content) {
+                showAlert('Please fill in all fields', 'error', 'templateModal');
+                return;
+            }
+            
+            const templateId = form.dataset.templateId ? parseInt(form.dataset.templateId) : null;
+            
+            if (templateId) {
+                // Update existing template
+                const template = state.templates.find(t => t.id === templateId);
+                if (template) {
+                    template.name = name;
+                    template.content = content;
+                }
+            } else {
+                // Create new template
+                const newId = state.templates.length > 0 ? 
+                    Math.max(...state.templates.map(t => t.id)) + 1 : 1;
+                
+                state.templates.push({
+                    id: newId,
+                    name: name,
+                    content: content,
+                    lastUsed: null
+                });
+            }
+            
+            // Save to local storage
+            localStorage.setItem('templates', JSON.stringify(state.templates));
+            
+            // Reload templates
+            loadTemplates();
+            
+            // Close modal
+            document.getElementById('templateModal').style.display = 'none';
+            
+            // Show success message
+            showAlert(`Template ${templateId ? 'updated' : 'created'} successfully!`, 'success', 'responseMessage');
+        }
+
+        function showAlert(message, type, containerId) {
+            const responseDiv = document.getElementById(containerId);
+            responseDiv.innerHTML = `
+                <div class="alert alert-${type}">
+                    ${message}
+                </div>
+            `;
+            responseDiv.style.display = 'block';
+            
+            // Hide after 5 seconds
+            setTimeout(() => {
+                responseDiv.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
